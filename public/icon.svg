@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- White Background -->
+  <rect width="512" height="512" rx="96" fill="#FFFFFF"/>
+  <rect width="504" height="504" x="4" y="4" rx="92" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="8"/>
+  
+  <g transform="translate(48, 130)">
+    <!-- O Icon Mark with Speed Accent -->
+    <text x="10" y="140" font-family="'Plus Jakarta Sans', 'Montserrat', 'Arial Black', sans-serif" font-size="160" font-weight="900" fill="#000000">OS</text>
+    
+    <!-- Red Accent Element -->
+    <path d="M220 30 H320 C345 30 365 50 365 75 C365 100 345 120 320 120 H220 Z" fill="#E60023"/>
+    <circle cx="270" cy="75" r="22" fill="#FFFFFF"/>
+    
+    <!-- Subtitle -->
+    <text x="16" y="240" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#000000" letter-spacing="8">OUTSHIPPER</text>
+    <text x="24" y="280" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" fill="#E60023" letter-spacing="4">ON TIME EVERY TIME</text>
+  </g>
+</svg>

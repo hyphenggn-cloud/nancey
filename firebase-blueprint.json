@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "UserProfile",
+      "description": "Represents an authenticated user profile in Nancy Logistics",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique Firebase Auth user ID" },
+        "email": { "type": "string", "format": "email", "description": "User email address" },
+        "displayName": { "type": "string", "maxLength": 100, "description": "Full name of user" },
+        "photoURL": { "type": "string", "description": "Avatar photo URL" },
+        "companyName": { "type": "string", "maxLength": 150, "description": "Shipper company name" },
+        "role": { "type": "string", "enum": ["customer", "admin"], "description": "Access level role" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "quoteRequest": {
+      "title": "QuoteRequest",
+      "description": "B2B freight rate quote request submitted by a shipper",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "description": "Unique quotation request identifier" },
+        "userId": { "type": "string", "description": "User ID of requester or guest" },
+        "companyName": { "type": "string", "maxLength": 150, "description": "Company name" },
+        "contactPerson": { "type": "string", "maxLength": 100, "description": "Contact person name" },
+        "mobileNumber": { "type": "string", "maxLength": 20, "description": "Contact telephone" },
+        "email": { "type": "string", "format": "email", "description": "Contact email" },
+        "pickupLocation": { "type": "string", "maxLength": 200, "description": "Pickup hub/address" },
+        "deliveryLocation": { "type": "string", "maxLength": 200, "description": "Delivery destination" },
+        "materialType": { "type": "string", "maxLength": 100, "description": "Material classification" },
+        "approximateWeight": { "type": "string", "maxLength": 50, "description": "Cargo payload weight" },
+        "vehicleRequirement": { "type": "string", "maxLength": 100, "description": "Requested vehicle category" },
+        "pickupDate": { "type": "string", "description": "Requested loading date" },
+        "additionalRequirements": { "type": "string", "maxLength": 500, "description": "Special transit notes" },
+        "status": { "type": "string", "enum": ["New", "In Review", "Quoted", "Dispatched"], "description": "Quotation workflow status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Submission timestamp" }
+      },
+      "required": ["companyName", "contactPerson", "mobileNumber", "email", "pickupLocation", "deliveryLocation", "materialType", "approximateWeight", "vehicleRequirement", "pickupDate"]
+    },
+    "contactEnquiry": {
+      "title": "ContactEnquiry",
+      "description": "General customer communication or freight inquiry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "description": "Enquiry reference code" },
+        "userId": { "type": "string", "description": "User ID if signed in" },
+        "name": { "type": "string", "maxLength": 100, "description": "Sender name" },
+        "company": { "type": "string", "maxLength": 150, "description": "Company name" },
+        "phone": { "type": "string", "maxLength": 20, "description": "Phone number" },
+        "email": { "type": "string", "format": "email", "description": "Email address" },
+        "message": { "type": "string", "maxLength": 1000, "description": "Message text" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Submission timestamp" }
+      },
+      "required": ["name", "company", "phone", "email", "message"]
+    },
+    "shipment": {
+      "title": "Shipment",
+      "description": "Pan-India commercial consignment tracking record",
+      "type": "object",
+      "properties": {
+        "trackingId": { "type": "string", "maxLength": 32, "description": "11-character consignment tracking ID" },
+        "customerName": { "type": "string", "maxLength": 100, "description": "Consignee or shipper representative" },
+        "companyName": { "type": "string", "maxLength": 150, "description": "Client company" },
+        "origin": { "type": "string", "maxLength": 150, "description": "Origin hub" },
+        "destination": { "type": "string", "maxLength": 150, "description": "Destination hub" },
+        "vehicleNumber": { "type": "string", "maxLength": 30, "description": "Commercial registration plate" },
+        "vehicleType": { "type": "string", "maxLength": 100, "description": "Vehicle classification" },
+        "driverName": { "type": "string", "maxLength": 100, "description": "Commercial driver name" },
+        "driverPhone": { "type": "string", "maxLength": 20, "description": "Driver hotline" },
+        "status": {
+          "type": "string",
+          "enum": [
+            "Booking Confirmed",
+            "Pickup Scheduled",
+            "Shipment Picked Up",
+            "In Transit",
+            "Reached Destination Hub",
+            "Out for Delivery",
+            "Delivered",
+            "Cancelled"
+          ],
+          "description": "Milestone delivery stage"
+        },
+        "currentLocation": { "type": "string", "maxLength": 200, "description": "Live GPS location description" },
+        "estimatedDelivery": { "type": "string", "maxLength": 100, "description": "Estimated delivery window" },
+        "lastUpdated": { "type": "string", "maxLength": 100, "description": "Last GPS ping" },
+        "materialType": { "type": "string", "maxLength": 100, "description": "Cargo description" },
+        "weight": { "type": "string", "maxLength": 50, "description": "Payload weight" },
+        "eWayBillNo": { "type": "string", "maxLength": 50, "description": "GST E-Way bill number" },
+        "gpsSpeed": { "type": "string", "maxLength": 20, "description": "Vehicle speed" }
+      },
+      "required": ["trackingId", "companyName", "origin", "destination", "vehicleNumber", "status"]
+    },
+    "siteContent": {
+      "title": "SiteContent",
+      "description": "Customizable homepage and brand content manageable exclusively by the owner",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "description": "Document identifier (e.g. homepage)" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Timestamp of last edit" },
+        "updatedBy": { "type": "string", "description": "UID or email of the editor" },
+        "hero": { "type": "object", "description": "Hero section content" },
+        "about": { "type": "object", "description": "About section content" },
+        "stats": { "type": "object", "description": "Numerical company statistics" },
+        "services": { "type": "array", "description": "Services listing content" },
+        "whyChooseUs": { "type": "object", "description": "Why choose us section content" },
+        "fleet": { "type": "array", "description": "Fleet vehicle specifications" },
+        "contact": { "type": "object", "description": "Contact info and phone numbers" },
+        "company": { "type": "object", "description": "Company general info" }
+      },
+      "required": ["id"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "userProfile",
+      "description": "Authenticated user profile documents"
+    },
+    "/quotes/{quoteId}": {
+      "schema": "quoteRequest",
+      "description": "B2B freight quotation inquiries"
+    },
+    "/enquiries/{enquiryId}": {
+      "schema": "contactEnquiry",
+      "description": "Public and client contact submissions"
+    },
+    "/shipments/{shipmentId}": {
+      "schema": "shipment",
+      "description": "Centralized shipment records for real-time tracking and admin dispatch"
+    },
+    "/site_content/{contentId}": {
+      "schema": "siteContent",
+      "description": "Owner-editable page content and customization configuration"
+    }
+  }
+}

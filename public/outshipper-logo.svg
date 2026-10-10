@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 160" width="100%" height="100%">
+  <!-- White Background as requested -->
+  <rect width="520" height="160" fill="#FFFFFF"/>
+
+  <!-- Logo Graphics Group -->
+  <g id="outshipper-brand" transform="translate(18, 30)">
+    <!-- Typography for OUTSHI (Black) -->
+    <text x="0" y="58" font-family="'Plus Jakarta Sans', 'Montserrat', 'Arial Black', -apple-system, sans-serif" font-size="56" font-weight="900" fill="#000000" letter-spacing="-0.5">OUTSHI</text>
+
+    <!-- First P (Black stem) -->
+    <path d="M228 14 H252 C265 14 274 21 274 32 C274 43 265 50 252 50 H240 V58 H228 V14 Z M240 24 V40 H250 C256 40 261 37 261 32 C261 27 256 24 250 24 H240 Z" fill="#000000"/>
+
+    <!-- Red Brand Accent Graphic spanning second P and E -->
+    <!-- Red Background Ribbon / Badge over PPE -->
+    <g transform="translate(262, 14)">
+      <!-- Red Graphic Accent -->
+      <path d="M0 0 H52 C56 0 60 4 60 8 V36 C60 40 56 44 52 44 H0 C8 36 12 28 12 22 C12 16 8 8 0 0 Z" fill="#E60023"/>
+      <!-- Inner cutout forming second P counter -->
+      <path d="M6 10 C16 14 18 20 18 22 C18 24 16 30 6 34 C12 29 14 25 14 22 C14 19 12 15 6 10 Z" fill="#FFFFFF"/>
+      <!-- Stylized E in Red with crisp negative spaces -->
+      <path d="M46 0 H84 V10 H58 V17 H80 V26 H58 V34 H84 V44 H46 V0 Z" fill="#E60023"/>
+    </g>
+
+    <!-- R in Black -->
+    <g transform="translate(352, 14)">
+      <path d="M0 0 H26 C38 0 47 7 47 19 C47 27 42 33 34 36 L48 58 H34 L22 38 H12 V58 H0 V0 Z M12 10 V28 H24 C30 28 35 25 35 19 C35 13 30 10 24 10 H12 Z" fill="#000000"/>
+    </g>
+
+    <!-- Subtitle: ON TIME EVERY TIME (Spaced Bold Uppercase in Black) -->
+    <text x="12" y="98" font-family="'Plus Jakarta Sans', 'Space Grotesk', 'Montserrat', -apple-system, sans-serif" font-size="16" font-weight="800" fill="#000000" letter-spacing="9.5">ON TIME EVERY TIME</text>
+  </g>
+</svg>

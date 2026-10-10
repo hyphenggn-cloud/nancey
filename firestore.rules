@@ -1,0 +1,98 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Admin helper: check email from runtime environment or admin record
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'harshvardh76655@gmail.com' ||
+        request.auth.token.email == 'connect@outshipper.in' ||
+        request.auth.token.email == 'nancylogestic@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // 1. User Profiles
+    match /users/{userId} {
+      allow get: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow list: if isAdmin();
+      allow create: if isSignedIn() && request.auth.uid == userId &&
+        incoming().uid == userId &&
+        incoming().email is string &&
+        incoming().role in ['customer', 'admin'];
+      allow update: if isSignedIn() && (request.auth.uid == userId || isAdmin()) &&
+        incoming().uid == existing().uid &&
+        incoming().email == existing().email;
+      allow delete: if isAdmin();
+    }
+
+    // 2. Shipments (Real-time tracking for customers & businesses)
+    match /shipments/{shipmentId} {
+      allow read: if true; // Public tracking access for consignment verification
+      allow create, update, delete: if isAdmin();
+    }
+
+    // 3. Freight Quotes
+    match /quotes/{quoteId} {
+      // Anyone can submit a quote request; logged-in users and admins can review
+      allow create: if incoming().companyName is string &&
+        incoming().contactPerson is string &&
+        incoming().mobileNumber is string &&
+        incoming().pickupLocation is string &&
+        incoming().deliveryLocation is string;
+      allow get: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow list: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow update, delete: if isAdmin();
+    }
+
+    // 4. Contact Enquiries
+    match /enquiries/{enquiryId} {
+      allow create: if incoming().name is string &&
+        incoming().company is string &&
+        incoming().phone is string &&
+        incoming().email is string &&
+        incoming().message is string;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // 5. Admin directory
+    match /admins/{adminId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // 6. Site Content & Live Page Customization (Editable only by the Owner)
+    match /site_content/{contentId} {
+      allow read: if true; // Public visitors see published site content
+      allow write: if isAdmin(); // Strictly restricted to owner/admin
+    }
+
+    // 7. Trips & Line-Haul Operations
+    match /trips/{tripId} {
+      allow read: if true; // Public or operational tracking access
+      allow create, update, delete: if isAdmin(); // Only owner/dispatcher can modify
+    }
+  }
+}
